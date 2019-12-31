@@ -64,6 +64,71 @@ const convertCityToNumb = (city)=>{
         return cityPora.miestas === city;
     })
 };
+async function checkActiveButton (page,index){
+    const puslapiai = await page.$$('.pagination > li:not(.hidden-xs-down)');
+    const lastBtn = await puslapiai[index].$eval('a',link=>link.className);
+    return lastBtn;
+}
+async function dataLoop (page,jobsArr){
+    await page.waitForSelector('.mobile_search_count');
+    const adList= await page.$$('.f_job_row2');
+            
+    for(const ad of adList){
+        const algaFn = async ()=>{
+            //TRY CATCH BLOCK JEI ALGOS NERA
+            try {
+                let algosKiekis = await ad.$eval('.salary-mobile>b',element=>element.innerText);
+                let algosPeriodas;
+
+                //READS STRING AROUND ELEMENT IN WHICH SALARY NUMBERS ARE WRITEN  
+                const textAplinkAlgosKieki = await ad.$eval('.salary-mobile',element=>{
+                    text = [];
+                    let child = element.firstChild;
+                    while(child){
+                        if(child.nodeType === 3) { text.push(child.data); }
+                        child = child.nextSibling;
+                    }
+                    return text;
+                });
+                // IF TWO STRINGS ARE FOUND ONE IS ADDED INFRONNT OF SALARY NUMB LIKE: nuo 800. THE OTHER IS EUR/MEN
+                 
+                if(textAplinkAlgosKieki.length === 2){
+                    algosKiekis = textAplinkAlgosKieki[0]+algosKiekis;
+                    algosPeriodas = textAplinkAlgosKieki[1];
+                }else{
+                    algosPeriodas = textAplinkAlgosKieki[0];
+                }
+                
+
+                const algosSkaiciavimas = await ad.$eval('.salary-type',(element)=>{
+                    const textLenght = element.innerText.length;
+                    if(textLenght===45){
+                        return 'Į rankas';
+                    }else if(textLenght===58){
+                        return 'Neatskaičius mokesčių';
+                    }else{return '-'}
+                });// 45 length = Į rankas, 58 = Neatskaičius mokesčių
+
+                return { alga: algosKiekis, algosPeriodas: algosPeriodas, algosSkaiciavimas: algosSkaiciavimas };
+            } catch (error) {
+                return '-'
+            }
+
+        }
+
+        const jobName  = await ad.$eval('.f_job_title',title=>title.innerText);
+        const miestas  = (await ad.$eval('.f_job_city',title=>title.innerText)).replace(/\s/g,''); //removes ne line \n leftover expresion using regex
+        const alga  = await algaFn();
+        const galiojimas  = await ad.$eval('.time-left-block',textElement=> textElement.innerText);
+        const linkToAd  = await ad.$eval('.main_job_link',link=>link.getAttribute('href'))
+
+        const darboInfo = {
+            jobName: jobName, alga: alga, miestas: miestas, adGaliojimas: galiojimas, nuoroda: 'https://www.cvmarket.lt'+linkToAd, source: 'cv market'
+        };
+        jobsArr.push(darboInfo);
+    }
+    console.log(jobsArr);
+}
 
 const cvMarket = (raktinisCvMarket,miestas,id)=>{
  return new Promise ((resolve,reject)=>{
@@ -102,71 +167,26 @@ const cvMarket = (raktinisCvMarket,miestas,id)=>{
 
             }
             //-------------------------------------
-    
-            const adList= await page.$$('.f_job_row2');
-            
-            for(const ad of adList){
-                const algaFn = async ()=>{
-                    //TRY CATCH BLOCK JEI ALGOS NERA
-                    try {
-                        let algosKiekis = await ad.$eval('.salary-mobile>b',element=>element.innerText);
-                        let algosPeriodas;
-
-                        //READS STRING AROUND ELEMENT IN WHICH SALARY NUMBERS ARE WRITEN  
-                        const textAplinkAlgosKieki = await ad.$eval('.salary-mobile',element=>{
-                            text = [];
-                            let child = element.firstChild;
-                            while(child){
-                                if(child.nodeType === 3) { text.push(child.data); }
-                                child = child.nextSibling;
-                            }
-                            return text;
-                        });
-                        // IF TWO STRINGS ARE FOUND ONE IS ADDED INFRONNT OF SALARY NUMB LIKE: nuo 800. THE OTHER IS EUR/MEN
-                         
-                        if(textAplinkAlgosKieki.length === 2){
-                            algosKiekis = textAplinkAlgosKieki[0]+algosKiekis;
-                            algosPeriodas = textAplinkAlgosKieki[1];
-                        }else{
-                            algosPeriodas = textAplinkAlgosKieki[0];
-                        }
-                        
-
-                        const algosSkaiciavimas = await ad.$eval('.salary-type',(element)=>{
-                            const textLenght = element.innerText.length;
-                            if(textLenght===45){
-                                return 'Į rankas';
-                            }else if(textLenght===58){
-                                return 'Neatskaičius mokesčių';
-                            }else{return '-'}
-                        });// 45 length = Į rankas, 58 = Neatskaičius mokesčių
-
-                        return { alga: algosKiekis, algosPeriodas: algosPeriodas, algosSkaiciavimas: algosSkaiciavimas };
-                    } catch (error) {
-                        return '-'
-                    }
-
-                }
-
-                const jobName  = await ad.$eval('.f_job_title',title=>title.innerText);
-                const miestas  = (await ad.$eval('.f_job_city',title=>title.innerText)).replace(/\s/g,''); //removes ne line \n leftover expresion using regex
-                const alga  = await algaFn();
-                const galiojimas  = await ad.$eval('.time-left-block',textElement=> textElement.innerText);
-                const linkToAd  = await ad.$eval('.main_job_link',link=>link.getAttribute('href'))
-
-                const darboInfo = {
-                    jobName: jobName, alga: alga, miestas: miestas, adGaliojimas: galiojimas, nuoroda: 'https://www.cvmarket.lt'+linkToAd, source: 'cv market'
-                };
-                jobsArr.push(darboInfo);
-            }
-
-            console.log(jobsArr);
-
+            //reads first page results and checks if next page buttons are present. If they are presses next page and calls dataLoop FN
+            await dataLoop(page,jobsArr);
             const puslapiai = await page.$$('.pagination > li:not(.hidden-xs-down)');
-            const nextBtn= puslapiai[puslapiai.length-2];
-            // nextBtn.click();
 
-            // console.log(puslapiai.length);
+            if(puslapiai.length === 0){  //page navigation not present meaning all results fit on one page.
+                //SAVE jobArr close page and browser and return resolve HERE
+            }else if(puslapiai.length === 6){//6 buttons present. 4 of them are forward backward buttons and rest is 1 2. data displayed in two pages. 
+                console.log('1');
+                console.log('pirmo mygtuko aktyvumas ',await checkActiveButton(page,2));
+                const nextBtn= puslapiai[puslapiai.length-2];
+                await nextBtn.click();
+                await dataLoop(page,jobsArr);
+
+                //SAVE jobArr close page and browser and return resolve HERE
+            }else if(puslapiai.length===7){
+                //checks if ACTIVE class no longer on left or centered and has reached right side meaning end of page list
+                const rightBtn = await puslapiai[4].$eval('a',link=>link.className);
+                
+            }
+        //    console.log(jobsArr);
 
          } catch (error) {
              console.log(error);
