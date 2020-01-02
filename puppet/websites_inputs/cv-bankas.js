@@ -65,7 +65,7 @@ const dataLoop = (page,searchPage,pageNum,jobsArr) => {
 
 const cvBankas = (raktinisCvBankas,miestas,id) => {
     let jobsArr = [];
-    if(miestas === 'Visa Lietuva'){miestas= null};
+    if(miestas === 'Visa Lietuva'){miestas= ''};
     return new Promise((resolve, reject) => {
         (async () => {
             let pirmasPaieskosPsl;
@@ -104,17 +104,15 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
                 } catch (error) {
                     puslapiuSkaicius = 1;
                 } 
-                console.log(puslapiuSkaicius , pirmasPaieskosPsl);
 
                 //LOOPAS EINANTIS PER REZULTATU PUSLAPIUS
                 for(let i=1; i<=puslapiuSkaicius;i++){
-                    console.log(i);
                     await dataLoop(page,pirmasPaieskosPsl,i,jobsArr);
                 }
                 await page.close()
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                console.log('Paieskos pabaiga');
+                console.log('Paieskos pabaiga cv bankas ir id yra =',id);
                 return resolve('cv bankas');
             } catch (error) {
                 //PASITAIKIUS KLAIDAI
@@ -124,4 +122,4 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
     }
     )
 };
-module.exports = { cvBankas: async (raktinisCvBankas,id) => { await cvBankas(raktinisCvBankas,id) } };
+module.exports = { cvBankas: async (raktinisCvBankas,miestas,id) => { await cvBankas(raktinisCvBankas,miestas,id) } };

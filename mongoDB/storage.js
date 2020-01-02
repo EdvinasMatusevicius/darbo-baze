@@ -7,10 +7,10 @@ const adList = {
             adList: adArr
         })
         await adList.save();
-        console.log('suveike saugojimas su schema');
+        console.log('suveike saugojimas su schema'); ///galima vieta io sockets data siuntimui i frontenda
     },
     readAdList: async(id)=>{
-        const adList =  await AdListModel.find({searchID:id}).lean().then(list=>{for(ad of list){
+         await AdListModel.find({searchID:id}).lean().then(list=>{for(ad of list){
             console.log(ad.adList);
         }});
         

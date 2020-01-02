@@ -64,9 +64,9 @@ const convertCityToNumb = (city)=>{
         return cityPora.miestas === city;
     })
 };
-async function checkActiveButton (page,index){
+async function checkActiveButton (page){
     const puslapiai = await page.$$('.pagination > li:not(.hidden-xs-down)');
-    const lastBtn = await puslapiai[index].$eval('a',link=>link.className);
+    const lastBtn = await puslapiai[puslapiai.length - 3].$eval('a',link=>link.className);
     return lastBtn;
 }
 async function dataLoop (page,jobsArr){
@@ -127,15 +127,14 @@ async function dataLoop (page,jobsArr){
         };
         jobsArr.push(darboInfo);
     }
-    console.log(jobsArr);
 }
-
+//MAIN FUNCTION THAT GETS EXPORTED <><><><><><><><><><><><><><><>
 const cvMarket = (raktinisCvMarket,miestas,id)=>{
  return new Promise ((resolve,reject)=>{
     let jobsArr = [];
      (async()=>{
          try {
-             const browser = await puppeteer.launch({headless: false});
+             const browser = await puppeteer.launch({headless: true});
              const page = await browser.newPage();
              page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
 
@@ -170,23 +169,24 @@ const cvMarket = (raktinisCvMarket,miestas,id)=>{
             //reads first page results and checks if next page buttons are present. If they are presses next page and calls dataLoop FN
             await dataLoop(page,jobsArr);
             const puslapiai = await page.$$('.pagination > li:not(.hidden-xs-down)');
-
+            console.log('cv market ir id yra =',id);
             if(puslapiai.length === 0){  //page navigation not present meaning all results fit on one page.
-                //SAVE jobArr close page and browser and return resolve HERE
-            }else if(puslapiai.length === 6){//6 buttons present. 4 of them are forward backward buttons and rest is 1 2. data displayed in two pages. 
-                console.log('1');
-                console.log('pirmo mygtuko aktyvumas ',await checkActiveButton(page,2));
-                const nextBtn= puslapiai[puslapiai.length-2];
-                await nextBtn.click();
-                await dataLoop(page,jobsArr);
-
-                //SAVE jobArr close page and browser and return resolve HERE
-            }else if(puslapiai.length===7){
-                //checks if ACTIVE class no longer on left or centered and has reached right side meaning end of page list
-                const rightBtn = await puslapiai[4].$eval('a',link=>link.className);
-                
+                await page.close();
+                await browser.close();
+                await storage.addAdList(jobsArr,id);
+                return resolve('cv market');
+            }else{
+                do {
+                    const puslapiaiInNewEnviroment = await page.$$('.pagination > li:not(.hidden-xs-down)');
+                    const nextBtn= puslapiaiInNewEnviroment[puslapiaiInNewEnviroment.length-2];
+                    await nextBtn.click();
+                    await dataLoop(page,jobsArr);
+                } while (await checkActiveButton(page) !== 'act');
+                await page.close();
+                await browser.close();
+                await storage.addAdList(jobsArr,id);
+                return resolve('cv market');
             }
-        //    console.log(jobsArr);
 
          } catch (error) {
              console.log(error);
