@@ -7,7 +7,7 @@ const ieskojimoBtnID = "#main_filter_submit";
 const afterSearch = '#filter_statistics_all';
 
 
-const dataLoop = (page,searchPage,pageNum,jobsArr) => {
+const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
     return new Promise((resolve, reject) => {
         (async () => {
             //SITAS TRY PATIKRINA AR GAUTAS REZULTATAS YRA DARBU LIST AR KLAIDA PRANESANTI KAD SKELBIMU PAGAL DUOTA INFO NERASTA
@@ -16,6 +16,7 @@ const dataLoop = (page,searchPage,pageNum,jobsArr) => {
                 if(pageNum>1) await page.goto(searchPage+'&page='+pageNum);
                 await page.waitForSelector(afterSearch);
                 const adList = await page.$$('#job_ad_list > .list_article');
+                adNumber.adNumb +=adList.length;
                 //FOR LOOPINA PER KIEKVIENA SKELBIMA IR ISGAUNA REIKIAMUS DUOMENIS
                 for (const ad of adList) {
                     //SKELBIMU DUOMENU ISGAVIMO FUNKCIJOS NAUDOJAMOS KADA DUOMENYS SKIRTINGUOSE SKELBIMUOSE BUNA SKIRTINGUOSE ELEMENTUOSE ARBA JU ISVIS NEBUBA
@@ -53,7 +54,7 @@ const dataLoop = (page,searchPage,pageNum,jobsArr) => {
                     //     if(error) throw error;
                     // })
                 };
-                return resolve('cv bankas');
+                return resolve('cv bankas loop done');
             } catch (e) {
                 console.log(e, 'EEEEEE KLAIDA');
                 
@@ -64,12 +65,13 @@ const dataLoop = (page,searchPage,pageNum,jobsArr) => {
 };
 
 const cvBankas = (raktinisCvBankas,miestas,id) => {
-    let jobsArr = [];
-    if(miestas === 'Visa Lietuva'){miestas= ''};
     return new Promise((resolve, reject) => {
         (async () => {
+            let jobsArr = [];
+            if(miestas === 'Visa Lietuva'){miestas= ''};
             let pirmasPaieskosPsl;
-            let puslapiuSkaicius
+            let puslapiuSkaicius;
+            let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
             try {
                 //CHROMIUMO IR CV BANKO ATIDARYMAS 
                 const browser = await puppeteer.launch({ headless: true});
@@ -86,15 +88,15 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
                 ieskojimoBtn.click();
                 //TIKRINIMAS AR RASTA REZULTATU
                 try {
-                    await page.waitForSelector(afterSearch);
+                    await page.waitForSelector(afterSearch,{timeout: 4000});
                     
                 } catch (error) {
                     // UZDAROMAS PUSLAPIS PO SKELBIMU NEBUVIMO
                 await page.waitForSelector('.message_err_list');
                 await page.close()
                 await browser.close();
-                console.log('cv bankas rezultatu nera');
-                return resolve('cv bankas');
+                console.log('cv bankas rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
+                return resolve('cv bankas rezultatu nera resolve info');
                 }
 
                 pirmasPaieskosPsl = page.url();
@@ -107,13 +109,13 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
 
                 //LOOPAS EINANTIS PER REZULTATU PUSLAPIUS
                 for(let i=1; i<=puslapiuSkaicius;i++){
-                    await dataLoop(page,pirmasPaieskosPsl,i,jobsArr);
+                    await dataLoop(page,pirmasPaieskosPsl,i,jobsArr,adNumber);
                 }
                 await page.close()
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
                 console.log('Paieskos pabaiga cv bankas ir id yra =',id);
-                return resolve('cv bankas');
+                return resolve(`cv bankas rado ${adNumber.adNumb} darbo skelbimus`);
             } catch (error) {
                 //PASITAIKIUS KLAIDAI
                 console.log(error);
@@ -122,4 +124,4 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
     }
     )
 };
-module.exports = { cvBankas: async (raktinisCvBankas,miestas,id) => { await cvBankas(raktinisCvBankas,miestas,id) } };
+module.exports = cvBankas;

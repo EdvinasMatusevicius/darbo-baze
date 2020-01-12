@@ -69,10 +69,10 @@ async function checkActiveButton (page){
     const lastBtn = await puslapiai[puslapiai.length - 3].$eval('a',link=>link.className);
     return lastBtn;
 }
-async function dataLoop (page,jobsArr){
+async function dataLoop (page,jobsArr,adNumber){
     await page.waitForSelector('.mobile_search_count');
     const adList= await page.$$('.f_job_row2');
-            
+    adNumber.adNumb+=adList.length;//on every loop adds adList items to adNumber object for total ads count
     for(const ad of adList){
         const algaFn = async ()=>{
             //TRY CATCH BLOCK JEI ALGOS NERA
@@ -131,6 +131,7 @@ async function dataLoop (page,jobsArr){
 //MAIN FUNCTION THAT GETS EXPORTED <><><><><><><><><><><><><><><>
 const cvMarket = (raktinisCvMarket,miestas,id)=>{
  return new Promise ((resolve,reject)=>{
+    let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
     let jobsArr = [];
      (async()=>{
          try {
@@ -155,37 +156,39 @@ const cvMarket = (raktinisCvMarket,miestas,id)=>{
 
             //AR YRA PAIESKOS REZULTATU TRY BLOKAS
             try {
-                await page.waitForSelector('.mobile_search_count');
+                await page.waitForSelector('.mobile_search_count',{timeout: 4000});
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 await page.waitForSelector('.fail');
                 await page.close()
                 await browser.close();
-                console.log('cv market rezultatu nera');
-                return resolve('cv market');
+                console.log('cv market rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
+                return resolve('cv market rezultatu nera  resolve info');
 
             }
             //-------------------------------------
             //reads first page results and checks if next page buttons are present. If they are presses next page and calls dataLoop FN
-            await dataLoop(page,jobsArr);
+            await dataLoop(page,jobsArr,adNumber);
+            console.log(adNumber.adNumb);
             const puslapiai = await page.$$('.pagination > li:not(.hidden-xs-down)');
             console.log('cv market ir id yra =',id);
             if(puslapiai.length === 0){  //page navigation not present meaning all results fit on one page.
                 await page.close();
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                return resolve('cv market');
+                return resolve(`cv market rado ${adNumber.adNumb} darbo skelbimus`);
             }else{
                 do {
                     const puslapiaiInNewEnviroment = await page.$$('.pagination > li:not(.hidden-xs-down)');
                     const nextBtn= puslapiaiInNewEnviroment[puslapiaiInNewEnviroment.length-2];
                     await nextBtn.click();
-                    await dataLoop(page,jobsArr);
+                    await dataLoop(page,jobsArr,adNumber);
+                    console.log(adNumber);
                 } while (await checkActiveButton(page) !== 'act');
                 await page.close();
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                return resolve('cv market');
+                return resolve(`cv market rado ${adNumber.adNumb} darbo skelbimus`);
             }
 
          } catch (error) {

@@ -11,7 +11,7 @@ const adList = {
     },
     readAdList: async(id)=>{
          await AdListModel.find({searchID:id}).lean().then(list=>{for(ad of list){
-            console.log(ad.adList);
+            // console.log(ad.adList);
         }});
         
     }
