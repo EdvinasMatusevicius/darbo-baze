@@ -23,8 +23,7 @@ router.post('/paieska',urlencodedParse,function(req,res,next){
     const searchID = Date.now();
     // cvMarket(raktinisZ,miestas,searchID);
     (async ()=>{
-            await cv(raktinisZ,miestas);
-    //    await puppet(raktinisZ,miestas,searchID).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
+       await puppet(raktinisZ,miestas,searchID).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
     //    await storage.readAdList(searchID);
     })();
     

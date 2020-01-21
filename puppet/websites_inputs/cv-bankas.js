@@ -49,10 +49,6 @@ const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
                         jobName: jobName, alga: alga, miestas: miestas, adGaliojimas: galiojimas, nuoroda: linkToAd, source: 'cv bankas'
                     };
                     jobsArr.push(darboInfo);
-                    // console.log(darboInfo);
-                    //  fs.appendFile('DarboSkelbimai.txt','\r\n'+JSON.stringify(darboInfo),(error)=>{
-                    //     if(error) throw error;
-                    // })
                 };
                 return resolve('cv bankas loop done');
             } catch (e) {
