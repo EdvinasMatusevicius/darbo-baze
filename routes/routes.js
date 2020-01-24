@@ -4,11 +4,6 @@ const router = express.Router();
 const puppet = require('../puppet/main-input');
 const storage = require('../mongoDB/storage');
 
-// cv kodas test
-const cvKodas = require('../puppet/websites_inputs/cv-kodas')
-
-
-
 let numberOfSearches = 0;
 
 router.get('/',function(req,res){
@@ -22,8 +17,7 @@ router.post('/paieska',urlencodedParse,function(req,res,next){
     numberOfSearches++
     const searchID = Date.now();
     (async ()=>{
-        await cvKodas(raktinisZ,miestas,searchID);
-    //    await puppet(raktinisZ,miestas,searchID).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
+       await puppet(raktinisZ,miestas,searchID).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
     //    await storage.readAdList(searchID);
     })();
     

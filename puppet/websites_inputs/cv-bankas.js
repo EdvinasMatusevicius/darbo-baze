@@ -4,12 +4,11 @@ const storage = require('../../mongoDB/storage');
 const raktinioZodzioInputID = '#filter_keyword';
 const ieskojimoBtnID = "#main_filter_submit";
 //LINKAS APZIURETI VISUS PUSLAPYJE ESANCIUS SKELBIMUS ATSIRANDANTIS PO PAIESKOS
-const afterSearch = '#filter_statistics_all';
+const afterSearch = '#job_ad_list';
 
 
 const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
-    return new Promise((resolve, reject) => {
-        (async () => {
+    return new Promise(async(resolve, reject) => {
             //SITAS TRY PATIKRINA AR GAUTAS REZULTATAS YRA DARBU LIST AR KLAIDA PRANESANTI KAD SKELBIMU PAGAL DUOTA INFO NERASTA
             try {
                 //SITAS IF EINA I REIKIAMA PUSLAPI NEBENT JIS BUNA PIRMAS JAU ANKSCIAU ATIDARYTAS PUSLAPIS
@@ -54,9 +53,8 @@ const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
             } catch (e) {
                 console.log(e, 'EEEEEE KLAIDA');
                 
-            }
+            };
             // await page.screenshot({ path: 'image.jpg', type: 'jpeg' });
-        })();
     })
 };
 
@@ -81,18 +79,18 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
                 await page.$eval(raktinioZodzioInputID, (el, raktinisCvBankas) => el.value = raktinisCvBankas, raktinisCvBankas);
                 await page.select('select#filter_city',miestas);
                 const ieskojimoBtn = await page.$(ieskojimoBtnID);
-                ieskojimoBtn.click();
+                await ieskojimoBtn.click();
                 //TIKRINIMAS AR RASTA REZULTATU
                 try {
-                    await page.waitForSelector(afterSearch,{timeout: 4000});
+                    await page.waitForSelector(afterSearch,{timeout: 5000}); //jei rasta tesia koda uz catch bloko
                     
                 } catch (error) {
                     // UZDAROMAS PUSLAPIS PO SKELBIMU NEBUVIMO
-                await page.waitForSelector('.message_err_list');
+                await page.waitForSelector('.message_err_list',{timeout: 4000});
                 await page.close()
                 await browser.close();
                 console.log('cv bankas rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
-                return resolve('cv bankas rezultatu nera resolve info');
+                return resolve('cv bankas rezultatu nera');
                 }
 
                 pirmasPaieskosPsl = page.url();
@@ -110,7 +108,6 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
                 await page.close()
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                console.log('Paieskos pabaiga cv bankas ir id yra =',id);
                 return resolve(`cv bankas rado ${adNumber.adNumb} darbo skelbimus`);
             } catch (error) {
                 //PASITAIKIUS KLAIDAI

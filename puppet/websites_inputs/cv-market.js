@@ -158,20 +158,17 @@ const cvMarket = (raktinisCvMarket,miestas,id)=>{
             try {
                 await page.waitForSelector('.mobile_search_count',{timeout: 4000});
             } catch (error) {
-                // console.log(error);
                 await page.waitForSelector('.fail');
                 await page.close()
                 await browser.close();
                 console.log('cv market rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
-                return resolve('cv market rezultatu nera  resolve info');
+                return resolve('cv market rezultatu nera');
 
             }
             //-------------------------------------
             //reads first page results and checks if next page buttons are present. If they are presses next page and calls dataLoop FN
             await dataLoop(page,jobsArr,adNumber);
-            console.log(adNumber.adNumb);
             const puslapiai = await page.$$('.pagination > li:not(.hidden-xs-down)');
-            console.log('cv market ir id yra =',id);
             if(puslapiai.length === 0){  //page navigation not present meaning all results fit on one page.
                 await page.close();
                 await browser.close();
@@ -183,7 +180,6 @@ const cvMarket = (raktinisCvMarket,miestas,id)=>{
                     const nextBtn= puslapiaiInNewEnviroment[puslapiaiInNewEnviroment.length-2];
                     await nextBtn.click();
                     await dataLoop(page,jobsArr,adNumber);
-                    console.log(adNumber);
                 } while (await checkActiveButton(page) !== 'act');
                 await page.close();
                 await browser.close();

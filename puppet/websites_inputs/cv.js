@@ -77,7 +77,7 @@ const cv = (raktinisCv, miestas, id) => {
                 await page.waitForSelector('#pagBottm');
                 //LOOKS IF THERES NORESULTS CLASS IF IT DOESNT FIND IT IN 4s IT GOES TO GET AD DATA
                 try {
-                    await page.waitForSelector('noresults', { timeout: 4000 });
+                    await page.waitForSelector('.noresults', { timeout: 4000 });
                     console.log('cv.lt nerado rezultatu');
                     resolve('cv.lt nerado rezultatu')
                     await page.close();

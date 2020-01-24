@@ -5,7 +5,7 @@ const adListShema = new Schema({
     searchID: Number,
     adList: Array
 },{
-    capped: 200000 //arba deti objecta su daugiau e
+    capped: 50000000 //bytes =50mb
 });
 const AdList = mongoose.model('jobs',adListShema);
 module.exports= AdList;
