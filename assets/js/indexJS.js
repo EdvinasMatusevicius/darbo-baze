@@ -16,14 +16,14 @@ form.addEventListener('submit',(event)=>{
              checkedArr.push(checkbox.name)
          }
      });
-     console.log(checkedArr);
-    // $.ajax({
-    //     method:'POST',
-    //     url: '/paieska',
-    //     data: {raktinis: raktinisZodis,
-    //     miestas: miestas},
-    //     success: function(data){
-    //         console.log(data);
-    //     }
-    // })
+    $.ajax({
+        method:'POST',
+        url: '/paieska',
+        data: {raktinis: raktinisZodis,
+        miestas: miestas,
+        pasirinktiPuslapiai: checkedArr},
+        success: function(data){
+            console.log(data);
+        }
+    })
 });

@@ -11,13 +11,15 @@ router.get('/',function(req,res){
 });
 
 router.post('/paieska',urlencodedParse,function(req,res,next){
-    let raktinisZ =req.body.raktinis;
-    let miestas = req.body.miestas;
+    const raktinisZ =req.body.raktinis;
+    const miestas = req.body.miestas;
+    const pasirinktiPuslapiai = req.body.pasirinktiPuslapiai
+
     console.log(raktinisZ);
     numberOfSearches++
     const searchID = Date.now();
     (async ()=>{
-       await puppet(raktinisZ,miestas,searchID).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
+       await puppet(raktinisZ,miestas,searchID,pasirinktiPuslapiai).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
     //    await storage.readAdList(searchID);
     })();
     
