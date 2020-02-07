@@ -1,4 +1,5 @@
 const form = document.querySelector('#paieska');
+const socket = io.connect('/');
 
 
 form.addEventListener('submit',(event)=>{

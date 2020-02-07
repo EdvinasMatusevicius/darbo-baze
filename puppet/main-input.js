@@ -15,7 +15,8 @@ const paieskosFn = (raktinis,miestas,id,sitesArr)=>{
         sitesArr.forEach(site => {
             newFnArr.push(sitesObj[site](raktinis,miestas,id))
         });
-        return newFnArr }else{
+        return newFnArr ;
+        }else{
             // return [cvMarket(raktinis,miestas,id),cvBankas(raktinis,miestas,id),cv(raktinis,miestas,id),cvKodas(raktinis,miestas,id)]
             return [new Promise((resolve, reject) => { resolve('Klaida! Nepasirinkote ieskojimo puslapiu')})];
         }
