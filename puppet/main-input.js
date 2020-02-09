@@ -7,13 +7,13 @@ const sitesObj ={"cvBankas":cvBankas, "cvMarket":cvMarket, "cv":cv, "cvKodas":cv
 
 
 
-const paieskosFn = (raktinis,miestas,id,sitesArr)=>{
+const paieskosFn = (raktinis,miestas,id,sitesArr,socketId)=>{
 
     const ieskojamuPslBuilder = (sitesArr)=>{
         if(sitesArr){
         let newFnArr = [];
         sitesArr.forEach(site => {
-            newFnArr.push(sitesObj[site](raktinis,miestas,id))
+            newFnArr.push(sitesObj[site](raktinis,miestas,id,socketId))
         });
         return newFnArr ;
         }else{

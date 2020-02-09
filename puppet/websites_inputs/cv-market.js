@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const storage = require('../../mongoDB/storage');
+const socket = require('../../sockets/socket');
+
 //after receving city name  number value needs to be used to select websites options
 const miestuNumeriuComboArr = [
 
@@ -129,7 +131,7 @@ async function dataLoop (page,jobsArr,adNumber){
     }
 }
 //MAIN FUNCTION THAT GETS EXPORTED <><><><><><><><><><><><><><><>
-const cvMarket = (raktinisCvMarket,miestas,id)=>{
+const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
  return new Promise ((resolve,reject)=>{
     let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
     let jobsArr = [];
@@ -184,14 +186,14 @@ const cvMarket = (raktinisCvMarket,miestas,id)=>{
                 await page.close();
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                return resolve(`cv market rado ${adNumber.adNumb} darbo skelbimus`);
+                return resolve(`cv market rado ${adNumber.adNumb} darbo  ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`);
             }
 
          } catch (error) {
              console.log(error);
          }
      })()
- })
+ }).then(data=>{socket.getIo().to(`${socketId}`).emit('cvmarket',data); return new Promise((resolve, reject) => {return resolve(data)})})
 }
 
 module.exports = cvMarket;

@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const storage = require('../../mongoDB/storage');
+const socket = require('../../sockets/socket');
+
 
 const raktinioZodzioInputID = '#filter_keyword';
 const ieskojimoBtnID = "#main_filter_submit";
@@ -58,7 +60,7 @@ const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
     })
 };
 
-const cvBankas = (raktinisCvBankas,miestas,id) => {
+const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
     return new Promise((resolve, reject) => {
         (async () => {
             let jobsArr = [];
@@ -108,13 +110,13 @@ const cvBankas = (raktinisCvBankas,miestas,id) => {
                 await page.close()
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                return resolve(`cv bankas rado ${adNumber.adNumb} darbo skelbimus`);
+                return resolve(`cv bankas rado ${adNumber.adNumb} darbo ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`);
             } catch (error) {
                 //PASITAIKIUS KLAIDAI
                 console.log(error);
             }
         })();
     }
-    )
+    ).then(data=>{socket.getIo().to(`${socketId}`).emit('cvbankas',data); return new Promise((resolve, reject) => {return resolve(data)})})
 };
 module.exports = cvBankas;

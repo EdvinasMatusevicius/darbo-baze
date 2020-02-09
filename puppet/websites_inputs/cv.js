@@ -1,5 +1,7 @@
 const puppeteer = require('puppeteer');
 const storage = require('../../mongoDB/storage');
+const socket = require('../../sockets/socket');
+
 const algosFn = async (ad) => {
     try {
         const algosKiekis = await ad.$eval('[itemprop="baseSalary"]', alga => alga.innerText);
@@ -39,7 +41,7 @@ const dataLoop = async (page, pageURL, pageNumb, adNumber, jobsArr) => {
     
 
 }
-const cv = (raktinisCv, miestas, id) => {
+const cv = (raktinisCv, miestas, id, socketId) => {
     return new Promise((resolve, reject) => {
         (async () => {
             let cityURL = 'empty';
@@ -91,7 +93,7 @@ const cv = (raktinisCv, miestas, id) => {
 
                     }
                     await storage.addAdList(jobsArr,id);
-                    resolve(`cv.lt rado ${adNumber.adNumb} darbo skelbimus`)
+                    resolve(`cv.lt rado ${adNumber.adNumb} darbo  ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`)
                     await page.close();
                     await browser.close();
                 }
@@ -99,6 +101,6 @@ const cv = (raktinisCv, miestas, id) => {
                 console.log(error)
             };
         })()
-    })
+    }).then(data=>{socket.getIo().to(`${socketId}`).emit('cvlt',data); return new Promise((resolve, reject) => {return resolve(data)})})
 }
 module.exports = cv;

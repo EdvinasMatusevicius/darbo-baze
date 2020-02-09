@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const storage = require('../../mongoDB/storage');
+const socket = require('../../sockets/socket');
 
 const dataLoop = async (page, pirmasPaieskosPsl, puslapioNum, jobArr, adNumber) => {
     if (puslapioNum > 1) {
@@ -33,7 +34,7 @@ const dataLoop = async (page, pirmasPaieskosPsl, puslapioNum, jobArr, adNumber) 
     }
 }
 
-const cvKodas = (raktinisCvKodas, miestas, id) => {
+const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
     return new Promise(async (resolve, reject) => {
         let miestoNumVal = 'empty';
         let jobsArr = [];
@@ -93,11 +94,11 @@ const cvKodas = (raktinisCvKodas, miestas, id) => {
             await page.close()
             await browser.close();
             await storage.addAdList(jobsArr, id);
-            return resolve(`cv kodas rado ${adNumber.adNumb} darbo skelbimus`);
+            return resolve(`cv kodas rado ${adNumber.adNumb} darbo  ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`);
 
         } catch (error) {
             console.log(error)
         }
-    })
+    }).then(data=>{socket.getIo().to(`${socketId}`).emit('cvkodas',data); return new Promise((resolve, reject) => {return resolve(data)})})
 }
 module.exports = cvKodas
