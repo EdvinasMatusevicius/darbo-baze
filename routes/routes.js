@@ -22,7 +22,8 @@ router.post('/paieska',urlencodedParse,function(req,res,next){
     const searchID = Date.now();
     (async ()=>{
        await puppet(raktinisZ,miestas,searchID,pasirinktiPuslapiai,socketId).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
-    //    await storage.readAdList(searchID);
+       const allAdds = await storage.readAdList(searchID);
+      res.send(allAdds);
     })();
 })
 module.exports = router;

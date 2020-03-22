@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const mongoConnect = require('./mongoDB/connection');
 const socket = require('./sockets/socket');
 
+const AdListModel = require('./mongoDB/schema');
+
 
 const app = express();
 
@@ -17,5 +19,23 @@ app.set('view engine','ejs')
 
 app.use('/public',express.static(__dirname +'/assets'))
 app.use('/',routes);
+
+// 1584897108300.0
+
+// async function testFind (id){
+//     await AdListModel.find({ searchID: id }).lean().then(list => {
+//         const allAds = list.reduce((finalList,websiteList)=>finalList.concat(websiteList.adList),[]);
+//         return allAds;
+//     }
+//     );
+    // AdListModel.countDocuments({ searchID: id }).exec((err, count) => {
+    //     if (err) {
+    //        console.log(err)
+    //     }
+    
+    //    console.log({ count: count });
+    // });
+// }
+// testFind(1584897108300.0);
 
 
