@@ -74,7 +74,6 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
             } catch (error) {
                 await page.close()
                 await browser.close();
-                console.log('cv kodas rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
                 return resolve('cv kodas rezultatu nera');
             }
             pirmasPaieskosPsl = page.url();

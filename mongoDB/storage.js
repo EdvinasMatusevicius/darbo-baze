@@ -17,13 +17,6 @@ const adList = {
             return allAds;
         }
         );
-        // AdListModel.countDocuments({ searchID: id }).exec((err, count) => {
-        //     if (err) {
-        //        console.log(err)
-        //     }
-        
-        //    console.log({ count: count });
-        // });
     }
 
 }

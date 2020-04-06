@@ -25,8 +25,9 @@ form.addEventListener('submit', (event) => {
                 pasirinktiPuslapiai: checkedArr,
                 socket:userSocket
             },
-            success: function (data) {
-                console.log(data);
+            success: function (id) {
+                window.location.href = window.location.href + `results/?id=${id}&page=1`
+                console.log(id);
             }
         })
     }else{

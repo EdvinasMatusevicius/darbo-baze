@@ -6,7 +6,7 @@ const socket = require('../../sockets/socket');
 const raktinioZodzioInputID = '#filter_keyword';
 const ieskojimoBtnID = "#main_filter_submit";
 //LINKAS APZIURETI VISUS PUSLAPYJE ESANCIUS SKELBIMUS ATSIRANDANTIS PO PAIESKOS
-const afterSearch = '#job_ad_list';
+const afterSearch = '#js_id_id_job_ad_list';
 
 
 const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
@@ -16,7 +16,7 @@ const dataLoop = (page,searchPage,pageNum,jobsArr,adNumber) => {
                 //SITAS IF EINA I REIKIAMA PUSLAPI NEBENT JIS BUNA PIRMAS JAU ANKSCIAU ATIDARYTAS PUSLAPIS
                 if(pageNum>1) await page.goto(searchPage+'&page='+pageNum);
                 await page.waitForSelector(afterSearch);
-                const adList = await page.$$('#job_ad_list > .list_article');
+                const adList = await page.$$(`${afterSearch} > .list_article`);
                 adNumber.adNumb +=adList.length;
                 //FOR LOOPINA PER KIEKVIENA SKELBIMA IR ISGAUNA REIKIAMUS DUOMENIS
                 for (const ad of adList) {
@@ -70,7 +70,7 @@ const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
             let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
             try {
                 //CHROMIUMO IR CV BANKO ATIDARYMAS 
-                const browser = await puppeteer.launch({ headless: true});
+                const browser = await puppeteer.launch({ headless: false});
                 const page = await browser.newPage();
                 page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
 

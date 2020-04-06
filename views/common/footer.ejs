@@ -1,5 +1,6 @@
-<script type="text/javascript" src="/public/js/socketJS.js"></script>
-
-<script type="text/javascript" src="/public/js/indexJS.js"></script>
+<% if (page === 'index') { %>
+    <script type="text/javascript" src="/public/js/socketJS.js"></script>
+<% } %>
+<script type="text/javascript" src="/public/js/<%=page%>JS.js"></script>
 </body>
 </html>
