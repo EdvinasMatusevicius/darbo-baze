@@ -1,0 +1,6 @@
+.paginate{
+    width:30rem;
+    display:flex;
+    flex-direction: row;
+    border: 3px solid green;
+}

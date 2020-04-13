@@ -26,7 +26,7 @@ form.addEventListener('submit', (event) => {
                 socket:userSocket
             },
             success: function (id) {
-                window.location.href = window.location.href + `results/?id=${id}&page=1`
+                window.location.href = window.location.href + `results/?id=${id}&site=all&page=1`
                 console.log(id);
             }
         })

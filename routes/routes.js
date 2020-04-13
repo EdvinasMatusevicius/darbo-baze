@@ -12,16 +12,25 @@ router.get('/',function(req,res){
     //new sockets class?
 });
 router.get('/results',function(req,res){
-    const curentPage = req.query.page;
-    const adsInPage = 15;
+    const currentPage = req.query.page;
+    const adsInPage = req.query.countperpage||30;
+    const webSite = req.query.site;//SELECT ADS FROM SITE. for later after UI
+
     (async ()=>{
         const allAds = await storage.readAdList(req.query.id);
+        const pageCount=Math.ceil(allAds.length/adsInPage);
+
         const pageAds = ()=>{if(allAds.length>adsInPage){
-            return allAds.slice((curentPage-1)*adsInPage,curentPage*adsInPage);
+            return allAds.slice((currentPage-1)*adsInPage,currentPage*adsInPage);
         }else{
             return allAds;
         }};
-        res.render('results',{page:'results',results:pageAds()});
+        res.render('results',{
+            page:'results',
+            results:pageAds(),
+            pageCount:pageCount,
+            currentPage:currentPage
+        });
      })()
 
 })

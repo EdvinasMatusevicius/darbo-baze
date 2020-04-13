@@ -1,7 +1,8 @@
 <%- include('common/header') %>
-
+<%= pageCount %> 
 <% for( let i = 0; i < results.length; i++ ) { %>
-<div class="result"><%=results[i].jobName%> </div><br>
+<a href="<%=results[i].nuoroda%>"><%=results[i].jobName%></a><h3><%=results[i].source%> </h3><br>
 <% } %>
 
+<%- include('common/paginateControl') %> 
 <%- include('common/footer') %>
