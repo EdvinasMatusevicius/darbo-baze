@@ -101,6 +101,6 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                 console.log(error)
             };
         })()
-    }).then(data=>{socket.getIo().to(`${socketId}`).emit('cvlt',data); return new Promise((resolve, reject) => {return resolve(data)})})
+    }).then(data=>{socket.getIo().to(`${socketId}`).emit('cv',data); return new Promise((resolve, reject) => {return resolve(data)})})
 }
 module.exports = cv;

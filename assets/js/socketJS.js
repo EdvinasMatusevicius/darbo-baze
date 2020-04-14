@@ -6,15 +6,19 @@ socket.on('handshake', (data) => {
     userSocket = data;
 
     socket.on('cvkodas',(data)=>{
-        console.log(data)
+        const site = document.querySelector('.cvKodas');
+        site.innerHTML=data;
     })
     socket.on('cvbankas',(data)=>{
-        console.log(data)
+        const site = document.querySelector('.cvBankas');
+        site.innerHTML=data;
     })
     socket.on('cvmarket',(data)=>{
-        console.log(data)
+        const site = document.querySelector('.cvMarket');
+        site.innerHTML=data;
     })
-    socket.on('cvlt',(data)=>{
-        console.log(data)
+    socket.on('cv',(data)=>{
+        const site = document.querySelector('.cv');
+        site.innerHTML=data;
     })
 });

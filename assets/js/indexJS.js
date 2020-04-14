@@ -1,4 +1,5 @@
 const form = document.querySelector('#paieska');
+const loading = document.querySelector('#loading');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -16,6 +17,8 @@ form.addEventListener('submit', (event) => {
         }
     });
     if (checkedArr.length > 0) {
+        console.log(checkedArr);
+        initLoading(checkedArr);
         $.ajax({
             method: 'POST',
             url: '/paieska',
@@ -34,3 +37,16 @@ form.addEventListener('submit', (event) => {
         console.log('turite pasirinkti bent viena paieskos puslapi');
     }
 });
+function initLoading(checkedArr){
+    checkedArr.forEach(site => {
+        let fullName;
+        if(site.length>2){
+            fullName=site.substring(0,2)+' '+site.substring(2);
+        }else{
+            fullName = site+' Lt'
+        }
+       fullName= fullName[0].toUpperCase() + fullName.substring(1)
+
+        loading.innerHTML +=`<div class="loading_site ${site}">${fullName} iesko rezultatu</div>`
+    });
+}
