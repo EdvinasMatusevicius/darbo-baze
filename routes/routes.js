@@ -12,8 +12,8 @@ router.get('/',function(req,res){
     //new sockets class?
 });
 router.get('/results',function(req,res){
-    const currentPage = req.query.page;
-    const adsInPage = req.query.countperpage||30;
+    const currentPage = Number(req.query.page);
+    const adsInPage = Number(req.query.countperpage)||30;
     const webSite = req.query.site;//SELECT ADS FROM SITE. for later after UI
 
     (async ()=>{

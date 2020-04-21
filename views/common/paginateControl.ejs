@@ -5,9 +5,10 @@
         <% } %> 
 
         <% 
-        const pageBtnAmount = pageCount>5 ? 5 : pageCount;
+        const pageBtnAmount = pageCount>10 ? 10 : pageCount;
         let maxLeft = currentPage - Math.floor(pageBtnAmount/2);
         let maxRight = currentPage + Math.floor(pageBtnAmount/2);
+        // console.log(typeof currentPage,typeof maxLeft,typeof maxRight,typeof pageBtnAmount);
         if(maxLeft<1){
             maxLeft=1;
             maxRight=pageBtnAmount;

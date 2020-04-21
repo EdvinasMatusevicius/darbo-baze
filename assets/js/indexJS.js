@@ -1,4 +1,4 @@
-const form = document.querySelector('#paieska');
+const form = document.querySelector('.search-js');
 const loading = document.querySelector('#loading');
 
 form.addEventListener('submit', (event) => {
@@ -38,6 +38,7 @@ form.addEventListener('submit', (event) => {
     }
 });
 function initLoading(checkedArr){
+    form.innerHTML='';
     checkedArr.forEach(site => {
         let fullName;
         if(site.length>2){
@@ -47,6 +48,6 @@ function initLoading(checkedArr){
         }
        fullName= fullName[0].toUpperCase() + fullName.substring(1)
 
-        loading.innerHTML +=`<div class="loading_site ${site}">${fullName} iesko rezultatu</div>`
+        loading.innerHTML +=`<div class="loading_site ${site}">${fullName} iesko rezultatu ${loadingSvg}</div>`
     });
 }

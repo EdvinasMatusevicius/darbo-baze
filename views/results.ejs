@@ -1,8 +1,30 @@
-<%- include('common/header') %>
-<%= pageCount %> 
-<% for( let i = 0; i < results.length; i++ ) { %>
-<a href="<%=results[i].nuoroda%>"><%=results[i].jobName%></a><h3><%=results[i].source%> </h3><br>
-<% } %>
-
+<%- include('common/header') %> 
 <%- include('common/paginateControl') %> 
+
+<div class="ad-list">
+
+    <% for( let i = 0; i < results.length; i++ ) { %>
+        <div class="ad-list__ad">
+            
+            <a href="<%=results[i].nuoroda%>" class="ad-list__job-name"><%=results[i].jobName%></a>
+
+            <% if(results[i].alga !== '-'){%>
+                <div class="ad-list__alga">
+                    <span class="ad-list__alga-kiekis"><%=results[i].alga.alga%></span>
+                    <span class="ad-list__alga-periodas"><%=results[i].alga.algosPeriodas%></span>
+                    <span class="ad-list__alga-skaiciavimas"><%=results[i].alga.algosSkaiciavimas%></span>
+
+                </div>
+                <% } %> 
+            <div class="ad-list__source"><%=results[i].miestas%></div>
+            <div class="ad-list__galiojimas">Skelbimo galiojimas/ikeltas pries <%=results[i].adGaliojimas%></div>
+            <a href="<%=results[i].nuoroda%>">
+                <div class="ad-list__source">I <%=results[i].source%> skelbima</div>
+            </a>
+            
+        </div>
+    <% } %>
+</div>  
+<%- include('common/paginateControl') %> 
+        
 <%- include('common/footer') %>

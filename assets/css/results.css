@@ -1,3 +1,32 @@
+*, *:hover {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+.top {
+  width: 100%;
+}
+
+.top__logo {
+  display: block;
+  margin: 0 auto;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #eef4f0;
+  background-attachment: fixed;
+  font-family: Bahnschrift, Arial, Helvetica, sans-serif;
+}
+
+.ad-list__ad {
+  margin-top: 1rem;
+  background-color: white;
+  border-bottom: 2px solid #f4bf58;
+}
+
 .paginate {
   width: 30rem;
   display: -webkit-box;
@@ -7,6 +36,9 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  border: 3px solid green;
+}
+
+.paginate button {
+  margin: 0 0.1rem;
 }
 /*# sourceMappingURL=results.css.map */

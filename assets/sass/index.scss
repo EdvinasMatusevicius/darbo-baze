@@ -1,7 +1,69 @@
 @import './variables.scss';
+@import './loading-animation.scss';
+*,*:hover{
+    padding:0;
+    margin: 0;
+}
 body{
     width: 100vw;
     height:100vh;
     background-color: $background-white;
     background-attachment:fixed;
+    font-family: $main-font;
+    color: $text-black;
 }
+input{
+    font-family: $main-font;
+    color: $text-black;
+}
+.top{
+    width:100%;
+    &__logo{
+        display:block;
+        margin:0 auto;
+    }
+}
+.search{
+    margin: 0 auto;
+    width: 95%;
+
+    &__inputs{
+        width:100%;
+        display:flex;
+        justify-content: space-evenly;
+        margin:1rem 0;
+    }
+
+    &__city,
+    &__key-word{
+        width:10rem;
+        height:2rem;
+        border:none;
+    }
+    &__city{
+        appearance: none;
+        background: url(../graphics/images/br_down.webp) no-repeat right white;
+        background-position-x: 95%;
+    }
+
+    &__submit{
+        width:15rem;
+        height: 3rem;
+        display:block;
+        margin: 0 auto;
+        background-color: $orange;
+        border:none;
+    }
+    &__sites-description{
+        display:flex;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    &__sites-selection{
+        display:flex;
+        justify-content: space-evenly;
+    }
+}
+
+

@@ -1,0 +1,45 @@
+@import './variables.scss';
+
+#loading-icon{
+    width:2rem;
+    height:2rem;
+}
+#first{
+    animation: spin1 2s infinite linear;
+    animation-delay: 0.3s;
+    transform-origin: 50% 50%;
+    fill:$blue;
+}
+#second{
+    animation: spin1 2s infinite linear;
+    animation-delay: 0.5s;
+    transform-origin: 50% 50%;
+    fill:$blue;
+    opacity:0.75;
+}
+#third{
+    animation: spin1 2s infinite linear;
+    animation-delay: 0.7s;
+    transform-origin: 50% 50%;
+    fill:$blue;
+    opacity:0.50;
+}
+#forth{
+    animation: spin1 2s infinite linear;
+    animation-delay: 0.9s;
+    transform-origin: 50% 50%;
+    fill:$blue;
+    opacity:0.25;
+}
+#fifth{
+    animation: spin1 2s infinite linear;
+    animation-delay: 1.1s;
+    transform-origin: 50% 50%;
+    fill:$blue;
+    opacity:0.05;
+}
+ 
+@keyframes spin1 {
+0% { -webkit-transform: rotate(0deg);}
+100% { -webkit-transform: rotate(360deg);}
+}
