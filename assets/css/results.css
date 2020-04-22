@@ -21,10 +21,24 @@ body {
   font-family: Bahnschrift, Arial, Helvetica, sans-serif;
 }
 
+.ad-list {
+  width: 100%;
+  padding-top: 1rem;
+}
+
 .ad-list__ad {
   margin-top: 1rem;
   background-color: white;
   border-bottom: 2px solid #f4bf58;
+}
+
+.no-results {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  display: block;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .paginate {
@@ -41,4 +55,3 @@ body {
 .paginate button {
   margin: 0 0.1rem;
 }
-/*# sourceMappingURL=results.css.map */

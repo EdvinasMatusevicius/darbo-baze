@@ -74,7 +74,7 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
             } catch (error) {
                 await page.close()
                 await browser.close();
-                return resolve('cv kodas rezultatu nera');
+                return resolve({site:'Cv bankas',numb:0});
             }
             pirmasPaieskosPsl = page.url();
 
@@ -93,7 +93,7 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
             await page.close()
             await browser.close();
             await storage.addAdList(jobsArr, id);
-            return resolve(`cv kodas rado ${adNumber.adNumb} darbo  ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`);
+            return resolve({site:'Cv kodas',numb:adNumber.adNumb});
 
         } catch (error) {
             console.log(error)

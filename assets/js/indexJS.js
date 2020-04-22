@@ -48,6 +48,6 @@ function initLoading(checkedArr){
         }
        fullName= fullName[0].toUpperCase() + fullName.substring(1)
 
-        loading.innerHTML +=`<div class="loading_site ${site}">${fullName} iesko rezultatu ${loadingSvg}</div>`
+        loading.innerHTML +=`<div class="loading__site ${site}">${fullName} <span class='warning'>&nbsp;iesko&nbsp;</span> rezultatu ${loadingSvg}</div>`
     });
 }

@@ -7,7 +7,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
     <link rel="stylesheet" href="/public/css/<%=page%>.css">
-              
+    <link rel="stylesheet" href="/public/css/common.css">
+
+    <% if (page === 'index') { %>
+    <link rel="stylesheet" href="/public/css/animation.css">
+    <% } %>  
     <title>Darbo baze</title>
 </head>
 <body>

@@ -19,12 +19,19 @@ body{
     font-family: $main-font;
 }
 .ad-list{
-
+width: 100%;
+padding-top: 1rem;
     &__ad{
         margin-top:1rem;
         background-color: white;
         border-bottom: 2px solid $yellow;
     }
+}
+.no-results{
+    width: fit-content;
+    display:block;
+    margin:0 auto;
+    text-align: center;
 }
 .paginate {
     width:30rem;

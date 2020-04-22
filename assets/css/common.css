@@ -1,0 +1,11 @@
+.success {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
+
+.warning {
+  color: #f7785e;
+}

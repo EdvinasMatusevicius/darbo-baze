@@ -3,7 +3,9 @@
 
 <div class="ad-list">
 
-    <% for( let i = 0; i < results.length; i++ ) { %>
+    <%if(results.length !==0 && results){ 
+        results
+        for( let i = 0; i < results.length; i++ ) { %>
         <div class="ad-list__ad">
             
             <a href="<%=results[i].nuoroda%>" class="ad-list__job-name"><%=results[i].jobName%></a>
@@ -23,7 +25,13 @@
             </a>
             
         </div>
-    <% } %>
+    <% }
+     }else{%>
+        <div class="no-results danger">
+            <h2>Rezultatu nerasta</h2>
+            <a href="/" class="success">Nauja paieska</a>
+        </div>
+        <% } %>
 </div>  
 <%- include('common/paginateControl') %> 
         

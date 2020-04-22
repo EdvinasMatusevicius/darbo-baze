@@ -36,7 +36,7 @@ const dataLoop = async (page, pageURL, pageNumb, adNumber, jobsArr) => {
         console.log(e);
         await page.close();
         await browser.close();
-        return resolve('cv lt data isgavima ivyko klaida');
+        return resolve('cv lt data isgavime ivyko klaida');
     }
     
 
@@ -81,7 +81,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                 try {
                     await page.waitForSelector('.noresults', { timeout: 4000 });
                     console.log('cv.lt nerado rezultatu');
-                    resolve('cv.lt nerado rezultatu')
+                    resolve({site:'Cv bankas',numb:0})
                     await page.close();
                     await browser.close();
 
@@ -93,7 +93,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
 
                     }
                     await storage.addAdList(jobsArr,id);
-                    resolve(`cv.lt rado ${adNumber.adNumb} darbo  ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`)
+                    resolve({site:'Cv lt',numb:adNumber.adNumb})
                     await page.close();
                     await browser.close();
                 }

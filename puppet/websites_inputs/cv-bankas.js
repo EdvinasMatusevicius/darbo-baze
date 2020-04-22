@@ -91,8 +91,8 @@ const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
                 await page.waitForSelector('.message_err_list',{timeout: 4000});
                 await page.close()
                 await browser.close();
-                console.log('cv bankas rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
-                return resolve('cv bankas rezultatu nera');
+                console.log('cv bankas rezultatu nera');
+                return resolve({site:'Cv bankas',numb:0});
                 }
 
                 pirmasPaieskosPsl = page.url();
@@ -110,7 +110,7 @@ const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
                 await page.close()
                 await browser.close();
                 await storage.addAdList(jobsArr,id);
-                return resolve(`cv bankas rado ${adNumber.adNumb} darbo ${adNumber.adNumb>9 ? 'skelbimu' : 'skelbimus'}`);
+                return resolve({site:'Cv bankas',numb:adNumber.adNumb});
             } catch (error) {
                 //PASITAIKIUS KLAIDAI
                 console.log(error);

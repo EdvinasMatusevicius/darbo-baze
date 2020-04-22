@@ -1,0 +1,11 @@
+@import './variables.scss';
+
+.success{
+    color:green;
+}
+.danger{
+    color: red;
+}
+.warning{
+    color:$orange;
+}
