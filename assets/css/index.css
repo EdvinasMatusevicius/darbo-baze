@@ -1,29 +1,6 @@
-*, *:hover {
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  width: 100vw;
-  height: 100vh;
-  background-color: #eef4f0;
-  background-attachment: fixed;
-  font-family: Bahnschrift, Arial, Helvetica, sans-serif;
-  color: #464545;
-}
-
 input {
   font-family: Bahnschrift, Arial, Helvetica, sans-serif;
   color: #464545;
-}
-
-.top {
-  width: 100%;
-}
-
-.top__logo {
-  display: block;
-  margin: 0 auto;
 }
 
 .search {

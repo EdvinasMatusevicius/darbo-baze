@@ -2,6 +2,8 @@
     <script type="text/javascript" src="/public/js/socketJS.js"></script>
     <script src="/public/graphics/animations/loading-svg.js"></script>
 <% } %>
+<% if (page !== undefined && page !== 'not-found' ) { %>
 <script type="text/javascript" src="/public/js/<%=page%>JS.js"></script>
+    <% } %>
 </body>
 </html>

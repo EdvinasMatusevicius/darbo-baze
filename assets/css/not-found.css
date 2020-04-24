@@ -1,0 +1,13 @@
+.not-found {
+  display: block;
+  margin: 0 auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.not-found__message {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}

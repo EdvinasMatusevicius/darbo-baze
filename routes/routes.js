@@ -48,4 +48,9 @@ router.post('/paieska',urlencodedParse,function(req,res,next){
       res.send(searchID);
     })();
 })
+router.use((req, res, next) => {
+    res.status(404).render(
+        'not-found',{page:'not-found'}
+    )
+   })
 module.exports = router;
