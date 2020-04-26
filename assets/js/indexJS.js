@@ -17,7 +17,6 @@ form.addEventListener('submit', (event) => {
         }
     });
     if (checkedArr.length > 0) {
-        console.log(checkedArr);
         initLoading(checkedArr);
         $.ajax({
             method: 'POST',
@@ -29,8 +28,12 @@ form.addEventListener('submit', (event) => {
                 socket:userSocket
             },
             success: function (id) {
-                window.location.href = window.location.href + `results/?id=${id}&site=all&page=1`
-                console.log(id);
+                const resultsPage = window.location.href + `results/?id=${id}&site=all&page=1`;
+
+                socket.on('async',()=>{
+                    window.location.href = resultsPage;
+                })
+
             }
         })
     }else{

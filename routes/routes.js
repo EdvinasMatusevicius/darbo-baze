@@ -3,6 +3,7 @@ const urlencodedParse = express.urlencoded({ extended: true });
 const router = express.Router();
 const puppet = require('../puppet/main-input');
 const storage = require('../mongoDB/storage');
+const socket = require('../sockets/socket');
 
 let numberOfSearches = 0;
 
@@ -35,7 +36,8 @@ router.get('/results',function(req,res){
      })()
 
 })
-router.post('/paieska',urlencodedParse,async function(req,res,next){
+router.post('/paieska',urlencodedParse,function(req,res,next){
+
     const raktinisZ =req.body.raktinis;
     const miestas = req.body.miestas;
     const pasirinktiPuslapiai = req.body.pasirinktiPuslapiai;
@@ -43,10 +45,12 @@ router.post('/paieska',urlencodedParse,async function(req,res,next){
     console.log(raktinisZ);
     numberOfSearches++
     const searchID = Date.now()+`${numberOfSearches}`;
-    // (async ()=>{
-       await puppet(raktinisZ,miestas,searchID,pasirinktiPuslapiai,socketId).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
-      res.send(searchID);
-    // })();
+    (async ()=>{
+        await puppet(raktinisZ,miestas,searchID,pasirinktiPuslapiai,socketId).then((data)=>{
+            socket.getIo().to(socketId).emit('async');
+        });
+    })();
+    res.send(searchID);
 })
 router.use((req, res, next) => {
     res.status(404).render(
