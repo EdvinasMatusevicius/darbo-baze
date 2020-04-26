@@ -43,7 +43,10 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
         let pagingContainer;
         let adNumber = { adNumb: 0 };//number of ads found. adNumb gets added to on every dataLoop
         try {
-            const browser = await puppeteer.launch({ headless: true });
+            const browser = await puppeteer.launch({ headless: true ,args:[
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+              ],});
             const page = await browser.newPage();
             page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
 
