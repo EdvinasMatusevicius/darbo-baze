@@ -1,0 +1,34 @@
+@media (min-width: 768px) {
+  .search {
+    width: 80%;
+    margin-top: 3rem;
+  }
+  .search__inputs {
+    width: 70%;
+    margin: 0 auto 1rem auto;
+  }
+  .search__city, .search__key-word {
+    width: 11rem;
+    height: 2.2rem;
+    border: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  input {
+    font-size: 1.1rem;
+  }
+  .search {
+    width: 70%;
+    margin-top: 3rem;
+  }
+  .search__inputs {
+    width: 70%;
+    margin: 0 auto 1rem auto;
+  }
+  .search__city, .search__key-word {
+    width: 13rem;
+    height: 2.3rem;
+    border: none;
+  }
+}

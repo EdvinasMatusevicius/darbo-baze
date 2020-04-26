@@ -8,22 +8,28 @@
         for( let i = 0; i < results.length; i++ ) { %>
         <div class="ad-list__ad">
             
-            <a href="<%=results[i].nuoroda%>" class="ad-list__job-name"><%=results[i].jobName%></a>
+            <div class="ad-list__job-info">
+                <a href="<%=results[i].nuoroda%>" class="ad-list__job-name"><%=results[i].jobName%></a>
+                <% if(results[i].alga !== '-'){%>
+                    <div class="ad-list__alga">
+                        <span class="ad-list__alga-kiekis"><%=results[i].alga.alga%></span>
+                        <% if(results[i].alga.algosPeriodas !== '-' && results[i].alga.algosPeriodas){%>
+                        <span class="ad-list__alga-periodas"><%=results[i].alga.algosPeriodas%></span>
+                        <% } %> 
+                        <% if(results[i].alga.algosSkaiciavimas !== '-' && results[i].alga.algosSkaiciavimas){%>
+                        <span class="ad-list__alga-skaiciavimas"><%=results[i].alga.algosSkaiciavimas%></span>
+                        <% } %> 
+                    </div>
+                    <% } %> 
+            </div>
+            <div class="ad-list__employer-info">
+                <div class="ad-list__city">Miestas(-ai): <%=results[i].miestas%></div>
+            </div>
+            <div class="ad-list__ad-info">
+                <div class="ad-list__expiration">Skelbimo galiojimas/ikeltas pries: <%=results[i].adGaliojimas%></div>
+                <a href="<%=results[i].nuoroda%>"class="ad-list__source">I <%=results[i].source%> skelbima</a>
+            </div>
 
-            <% if(results[i].alga !== '-'){%>
-                <div class="ad-list__alga">
-                    <span class="ad-list__alga-kiekis"><%=results[i].alga.alga%></span>
-                    <span class="ad-list__alga-periodas"><%=results[i].alga.algosPeriodas%></span>
-                    <span class="ad-list__alga-skaiciavimas"><%=results[i].alga.algosSkaiciavimas%></span>
-
-                </div>
-                <% } %> 
-            <div class="ad-list__source"><%=results[i].miestas%></div>
-            <div class="ad-list__galiojimas">Skelbimo galiojimas/ikeltas pries <%=results[i].adGaliojimas%></div>
-            <a href="<%=results[i].nuoroda%>">
-                <div class="ad-list__source">I <%=results[i].source%> skelbima</div>
-            </a>
-            
         </div>
     <% }
      }else{%>

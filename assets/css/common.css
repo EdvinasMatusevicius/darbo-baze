@@ -22,11 +22,11 @@ body {
 }
 
 .success {
-  color: green;
+  color: #019c01;
 }
 
 .danger {
-  color: red;
+  color: #fc3838;
 }
 
 .warning {

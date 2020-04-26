@@ -1,12 +1,30 @@
 @import './variables.scss';
-
+a{
+    color:$green;
+}
+a:visited {
+    color:$orange;
+  }
 .ad-list{
 width: 100%;
 padding-top: 1rem;
     &__ad{
+        display:flex;
+        flex-direction: column;
         margin-top:1rem;
         background-color: white;
         border-bottom: 2px solid $yellow;
+        box-shadow: 2px 7px 13px -1px rgba(0,0,0,0.21);
+        text-align: center;
+    }
+    &__job-info{
+        order:1;
+    }
+    &__employer-info{
+        order: 2;
+    }
+    &__ad-info{
+        order: 3;
     }
 }
 .no-results{
@@ -16,11 +34,19 @@ padding-top: 1rem;
     text-align: center;
 }
 .paginate {
-    width:30rem;
+    width:fit-content;
     display:flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    margin:0 auto;
+    &__btn{
+        padding:0 0.25rem;
+        height:1.5rem;
+        margin:1rem 0.3rem 0rem 0.3rem;
+        background-color: $yellow;
+        border:none;
+        border-radius: 0.1rem;
+        cursor: pointer;
+    }
 }
-//laikina
-.paginate button{
-    margin: 0 0.1rem;
-}
+

@@ -1,11 +1,11 @@
 <% if(pageCount>1){ %> 
     <div class="paginate">
         <% if(currentPage>1){ %> 
-            <button class="paginate__double-back paginate-btn-js" value=1 ><<</button>
+            <button class="paginate__btn paginate-btn-js" value=1 ><<</button>
         <% } %> 
 
         <% 
-        const pageBtnAmount = pageCount>10 ? 10 : pageCount;
+        const pageBtnAmount = pageCount>8 ? 8 : pageCount;
         let maxLeft = currentPage - Math.floor(pageBtnAmount/2);
         let maxRight = currentPage + Math.floor(pageBtnAmount/2);
         // console.log(typeof currentPage,typeof maxLeft,typeof maxRight,typeof pageBtnAmount);
@@ -24,12 +24,12 @@
                 
         for (let i = maxLeft; i <= maxRight; i++) {%>
             
-            <button class="btn paginate__btn paginate-btn-js" value=<%=i%> </button><%=i%></button>
+            <button class="paginate__btn paginate-btn-js" value=<%=i%> </button><%=i%></button>
             
         <% } %> 
 
         <% if(currentPage!=pageCount){ %> 
-            <button class="paginate__forward paginate-btn-js" value=<%= pageCount %>  > >> </button>
+            <button class="paginate__btn paginate-btn-js" value=<%= pageCount %>  > >> </button>
         <% } %>
     </div>
 <% } %> 

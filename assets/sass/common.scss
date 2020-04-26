@@ -19,10 +19,10 @@ body{
     font-family: $main-font;
 }
 .success{
-    color:green;
+    color:$green;
 }
 .danger{
-    color: red;
+    color: $red;
 }
 .warning{
     color:$orange;

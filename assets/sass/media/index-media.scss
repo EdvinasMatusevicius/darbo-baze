@@ -1,0 +1,37 @@
+@import '../variables.scss';
+
+@media (min-width: #{$tablet-width}){
+    .search{
+        width: 80%;
+        margin-top: 3rem;
+        &__inputs{
+            width: 70%;
+            margin:0 auto 1rem auto;
+        }
+        &__city,
+        &__key-word{
+            width:11rem;
+            height:2.2rem;
+            border:none;
+        }
+    }
+}
+@media (min-width: #{$desktop-width}){
+    input{
+        font-size: 1.1rem;
+    }
+    .search{
+        width: 70%;
+        margin-top: 3rem;
+        &__inputs{
+            width: 70%;
+            margin:0 auto 1rem auto;
+        }
+        &__city,
+        &__key-word{
+            width:13rem;
+            height:2.3rem;
+            border:none;
+        }
+    }
+}

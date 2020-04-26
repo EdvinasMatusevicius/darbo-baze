@@ -1,12 +1,48 @@
+a {
+  color: #019c01;
+}
+
+a:visited {
+  color: #f7785e;
+}
+
 .ad-list {
   width: 100%;
   padding-top: 1rem;
 }
 
 .ad-list__ad {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   margin-top: 1rem;
   background-color: white;
   border-bottom: 2px solid #f4bf58;
+  -webkit-box-shadow: 2px 7px 13px -1px rgba(0, 0, 0, 0.21);
+          box-shadow: 2px 7px 13px -1px rgba(0, 0, 0, 0.21);
+  text-align: center;
+}
+
+.ad-list__job-info {
+  -webkit-box-ordinal-group: 2;
+      -ms-flex-order: 1;
+          order: 1;
+}
+
+.ad-list__employer-info {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+}
+
+.ad-list__ad-info {
+  -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+          order: 3;
 }
 
 .no-results {
@@ -19,7 +55,9 @@
 }
 
 .paginate {
-  width: 30rem;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -27,8 +65,17 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin: 0 auto;
 }
 
-.paginate button {
-  margin: 0 0.1rem;
+.paginate__btn {
+  padding: 0 0.25rem;
+  height: 1.5rem;
+  margin: 1rem 0.3rem 0rem 0.3rem;
+  background-color: #f4bf58;
+  border: none;
+  border-radius: 0.1rem;
+  cursor: pointer;
 }
