@@ -7,7 +7,7 @@ const socket = require('./sockets/socket');
 
 const app = express();
 
-if(process.env.NODE_ENV !== 'prod'){
+if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config();
 }
 const server = app.listen(process.env.PORT,console.log('server listening port ',process.env.PORT));
