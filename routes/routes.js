@@ -35,7 +35,7 @@ router.get('/results',function(req,res){
      })()
 
 })
-router.post('/paieska',urlencodedParse,function(req,res,next){
+router.post('/paieska',urlencodedParse,async function(req,res,next){
     const raktinisZ =req.body.raktinis;
     const miestas = req.body.miestas;
     const pasirinktiPuslapiai = req.body.pasirinktiPuslapiai;
@@ -43,10 +43,10 @@ router.post('/paieska',urlencodedParse,function(req,res,next){
     console.log(raktinisZ);
     numberOfSearches++
     const searchID = Date.now()+`${numberOfSearches}`;
-    (async ()=>{
+    // (async ()=>{
        await puppet(raktinisZ,miestas,searchID,pasirinktiPuslapiai,socketId).then((data)=>{console.log('db pabaiga route dirctorijoj',data)});
       res.send(searchID);
-    })();
+    // })();
 })
 router.use((req, res, next) => {
     res.status(404).render(
