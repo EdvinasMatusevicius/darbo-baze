@@ -22,7 +22,6 @@ socket.on('handshake', (data) => {
         site.innerHTML=data.site?messageBuilder(data.site,data.numb):data;
     })
 });
-// {site:'Cv bankas',numb:adNumber.adNumb}
 function messageBuilder(site,ad){
     if(ad!==0){
     return `${site} rado <span class="success">&nbsp;${ad}&nbsp;</span> darbo ${ad>9 ? 'skelbimu' : 'skelbimus'}`;

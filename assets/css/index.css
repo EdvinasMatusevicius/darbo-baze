@@ -63,7 +63,7 @@ input {
 }
 
 .loading__site {
-  height: 2rem;
+  min-height: 2rem;
   font-size: 1.5rem;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -74,5 +74,7 @@ input {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  border-top: 0.5rem;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-top: 0.1rem;
 }

@@ -77,7 +77,7 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
             } catch (error) {
                 await page.close()
                 await browser.close();
-                return resolve({site:'Cv bankas',numb:0});
+                return resolve({site:'Cv kodas',numb:0});
             }
             pirmasPaieskosPsl = page.url();
 

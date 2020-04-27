@@ -84,7 +84,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                 try {
                     await page.waitForSelector('.noresults', { timeout: 4000 });
                     console.log('cv.lt nerado rezultatu');
-                    resolve({site:'Cv bankas',numb:0})
+                    resolve({site:'Cv lt',numb:0})
                     await page.close();
                     await browser.close();
 

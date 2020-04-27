@@ -167,7 +167,7 @@ const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
                 await page.close()
                 await browser.close();
                 console.log('cv market rezultatu nera');//galima io sockets data siuntimo vieta i frontenda
-                return resolve({site:'Cv bankas',numb:0});
+                return resolve({site:'Cv market',numb:0});
 
             }
             //-------------------------------------
