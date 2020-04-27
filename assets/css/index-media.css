@@ -1,3 +1,13 @@
+@media (max-width: 768px) {
+  .loading__site {
+    font-size: 1rem;
+  }
+  #loading-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
 @media (min-width: 768px) {
   .search {
     width: 80%;
