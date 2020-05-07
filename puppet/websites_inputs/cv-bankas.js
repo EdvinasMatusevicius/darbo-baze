@@ -68,12 +68,12 @@ const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
             let pirmasPaieskosPsl;
             let puslapiuSkaicius;
             let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
+            //CHROMIUMO IR CV BANKO ATIDARYMAS 
+            const browser = await puppeteer.launch({ headless: true,args:[
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+              ],});
             try {
-                //CHROMIUMO IR CV BANKO ATIDARYMAS 
-                const browser = await puppeteer.launch({ headless: true,args:[
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                  ],});
                 const page = await browser.newPage();
                 page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
 
@@ -116,7 +116,10 @@ const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
                 return resolve({site:'Cv bankas',numb:adNumber.adNumb});
             } catch (error) {
                 //PASITAIKIUS KLAIDAI
+                await page.close()
+                await browser.close();
                 console.log(error);
+                return resolve({site:'Cv bankas',numb:'ivyko klaida'});
             }
         })();
     }

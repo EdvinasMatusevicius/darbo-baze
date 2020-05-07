@@ -136,11 +136,11 @@ const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
     let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
     let jobsArr = [];
      (async()=>{
+         const browser = await puppeteer.launch({headless: true,args:[
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+          ],});
          try {
-             const browser = await puppeteer.launch({headless: true,args:[
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-              ],});
              const page = await browser.newPage();
              page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
 
@@ -193,7 +193,10 @@ const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
             }
 
          } catch (error) {
-             console.log(error);
+            await page.close();
+            await browser.close();
+            console.log(error);
+            return resolve({site:'Cv market',numb:'ivyko klaida'});
          }
      })()
  }).then(data=>{socket.getIo().to(`${socketId}`).emit('cvmarket',data); return new Promise((resolve, reject) => {return resolve(data)})})

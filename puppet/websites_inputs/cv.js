@@ -48,11 +48,11 @@ const cv = (raktinisCv, miestas, id, socketId) => {
             let adNumber = { adNumb: 0 }; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
             let jobsArr = [];
             miestas === 'Visa Lietuva' ? miestas = 'Visi miestai' : '';
+            const browser = await puppeteer.launch({ headless: true ,args:[
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+              ],});
             try {
-                const browser = await puppeteer.launch({ headless: true ,args:[
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                  ],});
                 const page = await browser.newPage();
                 page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
 
@@ -72,10 +72,9 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                     }
                 }
                 if (cityURL === 'empty') { //if after for loop city match hasn't been found search is terminated
-                    console.log('cv.lt neturi sio miesto pasirinkimo');
-                    resolve(`cv.lt neturi ${miestas} miesto pasirinkimo`)
                     await page.close();
                     await browser.close();
+                    resolve(`cv.lt neturi ${miestas} miesto pasirinkimo`)
                 }
                 const fullSearchURL = 'https://www.cv.lt' + cityURL + `&text=${raktinisCv}`;
                 await page.goto(fullSearchURL); //FINAL AD SEARCH FOR FINAL REZULTS WITH CONSTRUCTED URL
@@ -84,9 +83,9 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                 try {
                     await page.waitForSelector('.noresults', { timeout: 4000 });
                     console.log('cv.lt nerado rezultatu');
-                    resolve({site:'Cv lt',numb:0})
                     await page.close();
                     await browser.close();
+                    resolve({site:'Cv lt',numb:0})
 
                 } catch (e) {
                     const puslapiuSkaicius = (await page.$eval('.paging-top', el => el.innerText)).split(' ')[2];
@@ -96,11 +95,14 @@ const cv = (raktinisCv, miestas, id, socketId) => {
 
                     }
                     await storage.addAdList(jobsArr,id);
-                    resolve({site:'Cv lt',numb:adNumber.adNumb})
                     await page.close();
                     await browser.close();
+                    resolve({site:'Cv lt',numb:adNumber.adNumb})
                 }
             } catch (error) {
+                await page.close();
+                await browser.close();
+                resolve({site:'Cv lt',numb:'ivyko klaida'})
                 console.log(error)
             };
         })()
