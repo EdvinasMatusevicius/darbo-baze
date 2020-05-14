@@ -18,4 +18,8 @@ app.set('view engine','ejs')
 app.use(process.env.ASSETS_NICK,express.static(__dirname +'/assets'))
 app.use('/',routes);
 
+// Pora galimu variantu isplesti galimu chromo paiesku kieki
+// process.setMaxListeners(0);
+// require('events').EventEmitter.defaultMaxListeners = 15;
+// require('events').defaultMaxListeners = 15;
 

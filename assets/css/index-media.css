@@ -15,7 +15,11 @@
   }
   .search__inputs {
     width: 70%;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 2.5rem auto;
+  }
+  .search__warning {
+    min-height: 1.5rem;
+    margin-bottom: 1.5rem;
   }
   .search__city, .search__key-word {
     width: 11rem;
@@ -34,11 +38,39 @@
   }
   .search__inputs {
     width: 70%;
-    margin: 0 auto 1rem auto;
+    margin: 0 auto 3rem auto;
+  }
+  .search__warning {
+    min-height: 2rem;
+    margin-bottom: 2rem;
   }
   .search__city, .search__key-word {
     width: 13rem;
     height: 2.3rem;
     border: none;
+  }
+}
+
+@media (min-width: 2500px) {
+  body {
+    font-size: 2.5rem;
+  }
+  #loading-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+  .loading__site {
+    font-size: 2rem;
+  }
+  .search__city, .search__key-word, .search__submit {
+    width: 20rem;
+    height: 3.5rem;
+    font-size: 2.3rem;
+  }
+  .search__warning {
+    font-size: 2.2rem;
+  }
+  .success {
+    color: red;
   }
 }

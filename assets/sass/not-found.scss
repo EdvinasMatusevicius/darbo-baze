@@ -1,8 +1,17 @@
+@import './variables.scss';
+
 .not-found{
     display: block;
     margin: 0 auto;
     width: fit-content;
     &__message{
     width: fit-content;
+    }
+}
+@media (min-width: #{$desktop-width-high-res}){
+    .not-found{
+        &__message{
+            font-size: 2.5rem;
+        }
     }
 }

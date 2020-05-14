@@ -3,8 +3,11 @@ const loading = document.querySelector('#loading');
 
 form.addEventListener('submit', (event) => {
     event.preventDefault();
+    let continueFn = {continue:true};
     const raktinisZodis = form.raktinisZodis.value;
     const miestas = form.miestas.value;
+    checkVisaLietuvaStopIfNoWarning(miestas,raktinisZodis,continueFn);
+    if(!continueFn.continue){return null};
     const cvBCheck = form.cvBankas;
     const cvMCheck = form.cvMarket;
     const cvCheck = form.cv;
@@ -53,4 +56,26 @@ function initLoading(checkedArr){
 
         loading.innerHTML +=`<div class="loading__site ${site}">${fullName} <span class='warning'>&nbsp;iesko&nbsp;</span> rezultatu ${loadingSvg}</div>`
     });
+}
+function checkVisaLietuvaStopIfNoWarning(city,profession,continueFn){
+    const warningTxt = document.querySelector('.search__warning-all');
+    const adviceTxt = document.querySelector('.search__warning-advice');
+    
+    const warningInvisible = warningTxt.classList.contains('invisible');
+    const adviceInvisible = adviceTxt.classList.contains('invisible');
+    if(city ==='Visa Lietuva' && profession === ''){
+        if(warningInvisible){
+                adviceTxt.classList.add('invisible');
+                warningTxt.classList.remove('invisible');
+                continueFn.continue = false;
+                return
+            }
+        continueFn.continue=true;
+    }else{
+        if(!warningInvisible){
+            warningTxt.classList.add('invisible');
+            adviceTxt.classList.remove('invisible');
+
+        }
+    }
 }

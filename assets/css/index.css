@@ -16,7 +16,7 @@ input {
   -webkit-box-pack: space-evenly;
       -ms-flex-pack: space-evenly;
           justify-content: space-evenly;
-  margin: 1rem 0;
+  margin: 2rem 0;
 }
 
 .search__city, .search__key-word {
@@ -33,12 +33,19 @@ input {
   background-position-x: 95%;
 }
 
+.search__warning {
+  width: 100%;
+  min-height: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .search__submit {
   width: 15rem;
   height: 3rem;
   display: block;
   margin: 0 auto;
-  background-color: #f7785e;
+  background-color: #fa7459;
   border: none;
 }
 
@@ -50,7 +57,7 @@ input {
       -ms-flex-pack: center;
           justify-content: center;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .search__sites-selection {
@@ -77,4 +84,8 @@ input {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   margin-top: 0.1rem;
+}
+
+.invisible {
+  display: none;
 }

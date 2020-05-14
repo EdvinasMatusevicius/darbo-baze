@@ -18,7 +18,11 @@
         margin-top: 3rem;
         &__inputs{
             width: 70%;
-            margin:0 auto 1rem auto;
+            margin:0 auto 2.5rem auto;
+        }
+        &__warning{
+            min-height: 1.5rem;
+            margin-bottom: 1.5rem;
         }
         &__city,
         &__key-word{
@@ -37,7 +41,11 @@
         margin-top: 3rem;
         &__inputs{
             width: 70%;
-            margin:0 auto 1rem auto;
+            margin:0 auto 3rem auto;
+        }
+        &__warning{
+            min-height: 2rem;
+            margin-bottom: 2rem;
         }
         &__city,
         &__key-word{
@@ -45,5 +53,34 @@
             height:2.3rem;
             border:none;
         }
+    }
+}
+@media (min-width: #{$desktop-width-high-res}){
+    body{
+        font-size: 2.5rem;
+    }
+    #loading-icon{
+        width:3rem;
+        height:3rem;
+    }
+    .loading{
+        &__site{
+            font-size: 2rem;
+        }
+    }
+    .search{
+        &__city,
+        &__key-word,
+        &__submit{
+            width:20rem;
+            height:3.5rem;
+            font-size: 2.3rem;
+        }
+        &__warning{
+            font-size: 2.2rem;
+        }
+    }
+    .success{
+        color: red;
     }
 }
