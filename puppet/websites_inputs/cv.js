@@ -47,7 +47,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
             let cityURL = 'empty';
             let adNumber = { adNumb: 0 }; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
             let jobsArr = [];
-            miestas === 'Visa Lietuva' ? miestas = 'Visi miestai' : '';
+            if(miestas === 'Visa Lietuva'){miestas= 'Visi miestai'};
             const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser', headless: true ,args:[
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
