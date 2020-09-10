@@ -116,9 +116,9 @@ const cvBankas = (raktinisCvBankas,miestas,id,socketId) => {
                 return resolve({site:'Cv bankas',numb:adNumber.adNumb});
             } catch (error) {
                 //PASITAIKIUS KLAIDAI
+                console.log(error);
                 await page.close()
                 await browser.close();
-                console.log(error);
                 return resolve({site:'Cv bankas',numb:'ivyko klaida'});
             }
         })();

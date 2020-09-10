@@ -100,10 +100,10 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                     resolve({site:'Cv lt',numb:adNumber.adNumb})
                 }
             } catch (error) {
+                console.log(error)
                 await page.close();
                 await browser.close();
                 resolve({site:'Cv lt',numb:'ivyko klaida'})
-                console.log(error)
             };
         })()
     }).then(data=>{socket.getIo().to(`${socketId}`).emit('cv',data); return new Promise((resolve, reject) => {return resolve(data)})})

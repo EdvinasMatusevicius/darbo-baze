@@ -193,9 +193,9 @@ const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
             }
 
          } catch (error) {
+             console.log(error);
             await page.close();
             await browser.close();
-            console.log(error);
             return resolve({site:'Cv market',numb:'ivyko klaida'});
          }
      })()

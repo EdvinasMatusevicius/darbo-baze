@@ -99,9 +99,9 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
             return resolve({site:'Cv kodas',numb:adNumber.adNumb});
 
         } catch (error) {
+            console.log(error)
             await page.close()
             await browser.close();
-            console.log(error)
             return resolve({site:'Cv kodas',numb:'ivyko klaida'});
         }
     }).then(data=>{socket.getIo().to(`${socketId}`).emit('cvkodas',data); return new Promise((resolve, reject) => {return resolve(data)})})
