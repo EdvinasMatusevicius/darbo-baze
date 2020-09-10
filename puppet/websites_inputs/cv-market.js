@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const storage = require('../../mongoDB/storage');
 const socket = require('../../sockets/socket');
 
@@ -136,7 +136,7 @@ const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
     let adNumber = {adNumb:0}; //ad number is object and not primitive so that it would not be copied (only need a reference) so that its value could be changed in helper functions
     let jobsArr = [];
      (async()=>{
-         const browser = await puppeteer.launch({headless: true,args:[
+         const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser',headless: true,args:[
             '--no-sandbox',
             '--disable-setuid-sandbox',
           ],});

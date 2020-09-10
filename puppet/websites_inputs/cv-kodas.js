@@ -1,4 +1,4 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 const storage = require('../../mongoDB/storage');
 const socket = require('../../sockets/socket');
 
@@ -42,7 +42,7 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
         let puslapiuSkaicius;
         let pagingContainer;
         let adNumber = { adNumb: 0 };//number of ads found. adNumb gets added to on every dataLoop
-        const browser = await puppeteer.launch({ headless: true ,args:[
+        const browser = await puppeteer.launch({executablePath: '/usr/bin/chromium-browser', headless: true ,args:[
             '--no-sandbox',
             '--disable-setuid-sandbox',
           ],});
