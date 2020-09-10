@@ -21,9 +21,6 @@ a:visited {
           flex-direction: column;
   margin-top: 1rem;
   background-color: white;
-  border-bottom: 2px solid #f4bf58;
-  -webkit-box-shadow: 2px 7px 13px -1px rgba(0, 0, 0, 0.21);
-          box-shadow: 2px 7px 13px -1px rgba(0, 0, 0, 0.21);
   text-align: center;
 }
 

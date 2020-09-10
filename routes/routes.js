@@ -19,7 +19,6 @@ router.get('/results',function(req,res){
 
     (async ()=>{
         const allAds = await storage.readAdList(req.query.id);
-        console.log(allAds);
         const pageCount=Math.ceil(allAds.length/adsInPage);
 
         const pageAds = ()=>{if(allAds.length>adsInPage){

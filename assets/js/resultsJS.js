@@ -9,7 +9,6 @@ function initBtnEListeners(){
 
 }
 function goToPage(page){
-    console.log(page);
     const currentUrl = window.location.href;
     const urlSplit = currentUrl.split('?');
     const urlPage = urlSplit[0];
