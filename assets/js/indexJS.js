@@ -63,7 +63,7 @@ function checkVisaLietuvaStopIfNoWarning(city,profession,continueFn){
     
     const warningInvisible = warningTxt.classList.contains('invisible');
     const adviceInvisible = adviceTxt.classList.contains('invisible');
-    if(city ==='Visa Lietuva' && profession === ''){
+    if(profession === ''){
         if(warningInvisible){
                 adviceTxt.classList.add('invisible');
                 warningTxt.classList.remove('invisible');
