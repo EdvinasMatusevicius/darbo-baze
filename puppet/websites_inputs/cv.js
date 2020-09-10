@@ -55,6 +55,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
             try {
                 const page = await browser.newPage();
                 page.setUserAgent("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3312.0 Safari/537.36");
+                page.setDefaultNavigationTimeout(0);
 
                 await page.goto('https://www.cv.lt');
 
@@ -101,7 +102,6 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                 }
             } catch (error) {
                 console.log(error)
-                await page.close();
                 await browser.close();
                 resolve({site:'Cv lt',numb:'ivyko klaida'})
             };
