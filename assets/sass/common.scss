@@ -13,10 +13,13 @@
 }
 body{
     width: 100vw;
-    height:100vh;
+    min-height:100vh;
     background-color: $background-white;
     background-attachment:fixed;
     font-family: $main-font;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
 .success{
     color:$green;

@@ -45,6 +45,7 @@ form.addEventListener('submit', (event) => {
 });
 function initLoading(checkedArr){
     form.innerHTML='';
+    form.style.display='none';
     checkedArr.forEach(site => {
         let fullName;
         if(site.length>2){
@@ -54,7 +55,7 @@ function initLoading(checkedArr){
         }
        fullName= fullName[0].toUpperCase() + fullName.substring(1)
 
-        loading.innerHTML +=`<div class="loading__site ${site}">${fullName} <span class='warning'>&nbsp;iesko&nbsp;</span> rezultatu ${loadingSvg}</div>`
+        loading.innerHTML +=`<div class="loading__site ${site}">${fullName} <span class='warning'>&nbsp;ieško&nbsp;</span> rezultatų ${loadingSvg}</div>`
     });
 }
 function checkVisaLietuvaStopIfNoWarning(city,profession,continueFn){
