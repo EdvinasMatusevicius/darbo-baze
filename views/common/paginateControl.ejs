@@ -24,7 +24,7 @@
                 
         for (let i = maxLeft; i <= maxRight; i++) {%>
             
-            <button class="paginate__btn paginate-btn-js" value=<%=i%> </button><%=i%></button>
+            <button class="paginate__btn paginate-btn-js <% if(currentPage === i){%> paginate__btn-active <% } %> " value=<%=i%> </button><%=i%></button>
             
         <% } %> 
 

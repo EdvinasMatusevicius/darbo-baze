@@ -162,7 +162,7 @@ const cvMarket = (raktinisCvMarket,miestas,id,socketId)=>{
 
             //AR YRA PAIESKOS REZULTATU TRY BLOKAS
             try {
-                await page.waitForSelector('.mobile_search_count',{timeout: 4000});
+                await page.waitForSelector('.mobile_search_count',{timeout: 5000});
             } catch (error) {
                 await page.waitForSelector('.fail');
                 await page.close()

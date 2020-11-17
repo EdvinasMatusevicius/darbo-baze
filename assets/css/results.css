@@ -76,3 +76,8 @@ a:visited {
   border-radius: 0.1rem;
   cursor: pointer;
 }
+
+.paginate__btn-active {
+  color: #eef4f0;
+  background-color: #019c01;
+}
