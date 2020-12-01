@@ -65,7 +65,7 @@ const cvKodas = (raktinisCvKodas, miestas, id, socketId) => {
                     await page.close();
                     await browser.close();
                     console.log('cv kodas neturi sio miesto pasirinkimo');
-                    resolve(`cv kodas neturi ${miestas} miesto pasirinkimo`)
+                    return resolve(`cv kodas neturi ${miestas} miesto pasirinkimo`)
                 }
                 await page.select('select#f1-select', miestoNumVal);
             }

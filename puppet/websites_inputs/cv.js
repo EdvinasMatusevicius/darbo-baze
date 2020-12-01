@@ -75,7 +75,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                 if (cityURL === 'empty') { //if after for loop city match hasn't been found search is terminated
                     await page.close();
                     await browser.close();
-                    resolve(`cv.lt neturi ${miestas} miesto pasirinkimo`)
+                    return resolve(`cv.lt neturi ${miestas} miesto pasirinkimo`)
                 }
                 const fullSearchURL = 'https://www.cv.lt' + cityURL + `&text=${raktinisCv}`;
                 await page.goto(fullSearchURL); //FINAL AD SEARCH FOR FINAL REZULTS WITH CONSTRUCTED URL
@@ -86,7 +86,7 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                     console.log('cv.lt nerado rezultatu');
                     await page.close();
                     await browser.close();
-                    resolve({site:'Cv lt',numb:0})
+                    return resolve({site:'Cv lt',numb:0})
 
                 } catch (e) {
                     const puslapiuSkaicius = (await page.$eval('.paging-top', el => el.innerText)).split(' ')[2];
@@ -98,12 +98,12 @@ const cv = (raktinisCv, miestas, id, socketId) => {
                     await storage.addAdList(jobsArr,id);
                     await page.close();
                     await browser.close();
-                    resolve({site:'Cv lt',numb:adNumber.adNumb})
+                    return resolve({site:'Cv lt',numb:adNumber.adNumb})
                 }
             } catch (error) {
                 console.log(error)
                 await browser.close();
-                resolve({site:'Cv lt',numb:'ivyko klaida'})
+                return resolve({site:'Cv lt',numb:'ivyko klaida'})
             };
         })()
     }).then(data=>{socket.getIo().to(`${socketId}`).emit('cv',data); return new Promise((resolve, reject) => {return resolve(data)})})
